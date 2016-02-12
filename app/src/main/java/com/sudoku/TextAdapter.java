@@ -75,13 +75,11 @@ public class TextAdapter extends BaseAdapter {
             // if it's not recycled, initialize some attributes
             editText = new EditText(mContext);
             editText.setLayoutParams(new GridView.LayoutParams(85, 85));
-            editText.setPadding(8, 8, 8, 8);
-            editText.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            editText.setPadding(0, 0, 0, 0);
+            editText.setGravity(Gravity.CENTER);
             editText.setInputType(InputType.TYPE_CLASS_NUMBER);
 
             GradientDrawable gd = new GradientDrawable();
-            gd.setColor(0xFFFFFFFF); // Changes this drawbale to use a single color instead of a gradient
-            gd.setCornerRadius(5);
             gd.setStroke(1, 0xFF000000);
             editText.setBackground(gd);
 
