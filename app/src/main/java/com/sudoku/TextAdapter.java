@@ -46,6 +46,7 @@ public class TextAdapter extends BaseAdapter {
                 } else {
                     grid[i] = Integer.valueOf(element);
                 }
+                Log.i("YO", String.valueOf(grid[i]));
 
                 i++;
             }
@@ -93,7 +94,7 @@ public class TextAdapter extends BaseAdapter {
             editText = (EditText) convertView;
         }
 
-        editText.setText(grid[position]);
+        editText.setText(String.valueOf(grid[position]));
 
 
         return editText;
