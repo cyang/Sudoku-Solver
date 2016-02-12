@@ -1,10 +1,7 @@
 package com.sudoku;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +17,10 @@ public class SudokuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sudoku);
 
         GridView gridview = (GridView) findViewById(R.id.gridView);
-        gridview.setAdapter(new ImageAdapter(this));
+
+
+
+        gridview.setAdapter(new TextAdapter(this));
 
         gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -52,4 +52,5 @@ public class SudokuActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
