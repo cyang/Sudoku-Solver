@@ -51,4 +51,14 @@
         android:layout_toEndOf="@+id/medium"
         android:onClick="populateGrid"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Solve"
+        android:id="@+id/solveButton"
+        android:layout_below="@+id/medium"
+        android:layout_alignEnd="@+id/medium"
+        android:layout_alignParentStart="true"
+        android:onClick="solvePuzzle"/>
+
 </RelativeLayout>

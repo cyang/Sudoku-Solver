@@ -17,6 +17,7 @@ import java.io.InputStream;
 public class SudokuActivity extends AppCompatActivity {
     GridView gridview;
     AssetManager assetManager;
+    int puzzleLevel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +76,7 @@ public class SudokuActivity extends AppCompatActivity {
                 try {
                     InputStream inputStream = assetManager.open("easy_1.in");
                     gridview.setAdapter(new TextAdapter(this, inputStream));
+                    puzzleLevel = 0;
                 } catch (IOException e) {
                     Log.i("Yo", "OH NO");
 
@@ -84,6 +86,7 @@ public class SudokuActivity extends AppCompatActivity {
                 try {
                     InputStream inputStream = assetManager.open("medium_1.in");
                     gridview.setAdapter(new TextAdapter(this, inputStream));
+                    puzzleLevel = 1;
                 } catch (IOException e) {
                     Log.i("Yo", "OH NO");
 
@@ -93,6 +96,7 @@ public class SudokuActivity extends AppCompatActivity {
                 try {
                     InputStream inputStream = assetManager.open("hard_1.in");
                     gridview.setAdapter(new TextAdapter(this, inputStream));
+                    puzzleLevel = 2;
                 } catch (IOException e) {
                     Log.i("Yo", "OH NO");
 
@@ -102,6 +106,38 @@ public class SudokuActivity extends AppCompatActivity {
 
     }
 
+    public void solvePuzzle(View view) {
+        switch (puzzleLevel){
+            case 0:
+                try {
+                    InputStream inputStream = assetManager.open("solution_easy_1.in");
+                    gridview.setAdapter(new TextAdapter(this, inputStream));
+                } catch (IOException e) {
+                    Log.i("Yo", "OH NO");
+
+                }
+                break;
+            case 1:
+                try {
+                    InputStream inputStream = assetManager.open("solution_medium_1.in");
+                    gridview.setAdapter(new TextAdapter(this, inputStream));
+                } catch (IOException e) {
+                    Log.i("Yo", "OH NO");
+
+                }
+                break;
+            case 2:
+                try {
+                    InputStream inputStream = assetManager.open("solution_hard_1.in");
+                    gridview.setAdapter(new TextAdapter(this, inputStream));
+                } catch (IOException e) {
+                    Log.i("Yo", "OH NO");
+
+                }
+                break;
+
+        }
+    }
 }
 
 
