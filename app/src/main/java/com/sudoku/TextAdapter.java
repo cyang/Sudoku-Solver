@@ -54,6 +54,10 @@ public class TextAdapter extends BaseAdapter {
             gd.setStroke(1, 0xFF000000);
             editText.setBackground(gd);
 
+            InputFilter[] FilterArray = new InputFilter[1];
+            FilterArray[0] = new InputFilter.LengthFilter(1);
+            editText.setFilters(FilterArray);
+
 
         } else {
             editText = (EditText) convertView;
