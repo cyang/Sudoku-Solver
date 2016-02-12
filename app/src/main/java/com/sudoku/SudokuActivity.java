@@ -30,7 +30,7 @@ public class SudokuActivity extends AppCompatActivity {
 
 
         try {
-            InputStream inputStream = assetManager.open("puzzle1.in");
+            InputStream inputStream = assetManager.open("easy_1.in");
             gridview.setAdapter(new TextAdapter(this, inputStream));
         } catch (IOException e) {
             Log.i("Yo", "OH NO");
@@ -68,16 +68,36 @@ public class SudokuActivity extends AppCompatActivity {
     }
 
     public void populateGrid(View view) {
-        String id = view.getResources().getResourceName(view.getId());
+        String id = view.getResources().getResourceEntryName(view.getId());
+        Log.i("Yo", "Got: " + id);
         switch (id) {
             case "easy":
                 try {
-                    InputStream inputStream = assetManager.open("puzzle1.in");
+                    InputStream inputStream = assetManager.open("easy_1.in");
                     gridview.setAdapter(new TextAdapter(this, inputStream));
                 } catch (IOException e) {
                     Log.i("Yo", "OH NO");
 
                 }
+                break;
+            case "medium":
+                try {
+                    InputStream inputStream = assetManager.open("medium_1.in");
+                    gridview.setAdapter(new TextAdapter(this, inputStream));
+                } catch (IOException e) {
+                    Log.i("Yo", "OH NO");
+
+                }
+                break;
+            case "hard":
+                try {
+                    InputStream inputStream = assetManager.open("hard_1.in");
+                    gridview.setAdapter(new TextAdapter(this, inputStream));
+                } catch (IOException e) {
+                    Log.i("Yo", "OH NO");
+
+                }
+                break;
         }
 
     }
