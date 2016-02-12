@@ -2,6 +2,7 @@ package com.sudoku;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.graphics.drawable.GradientDrawable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -18,17 +19,40 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.HashMap;
 
 public class TextAdapter extends BaseAdapter {
     private Context mContext;
-    private HashMap<Integer, Integer> puzzle1 = new HashMap<>();
-    private Integer[] puzzle1Positions = {1, 3 ,4, 6, 11, 12, 13, 19, 20, 22, 23, 28, 29, 30, 32, 33, 39, 50, 51, 52, 54, 55, 62, 63, 65, 67, 71, 73, 76, 79};
-    private Integer[] puzzle1Given = {9, 5, 6, 7, 4, 3, 9, 5, 2, 8, 7, 1, 7, 6, 4, 5, 2, 8, 4, 7, 3, 1, 9, 9, 6, 2, 3, 8, 1, 2};
+    private Integer[] grid = new Integer[81];
 
-    public TextAdapter(Context c) {
+    public TextAdapter(Context c, InputStream inputStream) throws IOException {
         mContext = c;
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(inputStream));
+        String line;
+
+
+        int i = 0;
+        while((line = in.readLine()) != null){
+            String[] lineArray = line.split(" ");
+            for (String element : lineArray) {
+                if (element.equals("*")) {
+                    grid[i] = -1;
+                } else {
+                    grid[i] = Integer.valueOf(element);
+                }
+
+                i++;
+            }
+        }
+
+
+
     }
 
     public int getCount() {
@@ -69,25 +93,11 @@ public class TextAdapter extends BaseAdapter {
             editText = (EditText) convertView;
         }
 
-        createPuzzle1();
-        if(puzzle1.containsKey(position)) {
-            editText.setText(String.valueOf(puzzle1.get(position)));
-        } else {
-            editText.setText("");
-        }
+        editText.setText(grid[position]);
+
 
         return editText;
     }
 
-    public void createPuzzle1(){
-        for (int i = 0; i < puzzle1Positions.length; i++) {
-            puzzle1.put(puzzle1Positions[i], puzzle1Given[i]);
-        }
-
-    }
-
-//    public void setEasyPuzzle(){
-//        textView.setText()
-//    }
 }
 

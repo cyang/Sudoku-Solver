@@ -1,13 +1,17 @@
 package com.sudoku;
 
+import android.content.res.AssetManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AdapterView;
 import android.widget.GridView;
-import android.widget.Toast;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class SudokuActivity extends AppCompatActivity {
 
@@ -16,19 +20,13 @@ public class SudokuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sudoku);
 
-        GridView gridview = (GridView) findViewById(R.id.gridView);
-
-
-
-        gridview.setAdapter(new TextAdapter(this));
-
-        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                Toast.makeText(SudokuActivity.this, "" + position,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
+//        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            public void onItemClick(AdapterView<?> parent, View v,
+//                                    int position, long id) {
+//                Toast.makeText(SudokuActivity.this, "" + position,
+//                        Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     @Override
@@ -53,4 +51,30 @@ public class SudokuActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void populateGrid(View view) {
+        String id = view.getResources().getResourceName(view.getId());
+        GridView gridview = (GridView) findViewById(R.id.gridView);
+
+        switch (id) {
+            case "easy":
+                AssetManager assetManager = getAssets();
+
+                try {
+                    InputStream inputStream = assetManager.open("puzzle1.in");
+                    gridview.setAdapter(new TextAdapter(this, inputStream));
+                } catch (IOException e) {
+
+                }
+
+
+                break;
+            case "medium":
+                break;
+            case "hard":
+                break;
+            default:
+                break;
+        }
+
+    }
 }
