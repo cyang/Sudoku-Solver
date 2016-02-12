@@ -9,6 +9,7 @@ import android.text.InputType;
 import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -42,12 +43,10 @@ public class TextAdapter extends BaseAdapter {
             String[] lineArray = line.split(" ");
             for (String element : lineArray) {
                 if (element.equals("*")) {
-                    grid[i] = -1;
+                    grid[i] = null;
                 } else {
                     grid[i] = Integer.valueOf(element);
                 }
-                Log.i("YO", String.valueOf(grid[i]));
-
                 i++;
             }
         }
@@ -69,35 +68,57 @@ public class TextAdapter extends BaseAdapter {
     }
 
     // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        EditText editText;
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        final TextView textView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
-            editText = new EditText(mContext);
-            editText.setLayoutParams(new GridView.LayoutParams(85, 85));
-            editText.setPadding(8, 8, 8, 8);
-            editText.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+            textView = new EditText(mContext);
+            textView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            textView.setPadding(8, 8, 8, 8);
+            textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+            //textView.setInputType(InputType.TYPE_CLASS_NUMBER);
+
+
+            textView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
+                        if (grid[position] == null) {
+                            grid[position] = 0;
+                            textView.setText(String.valueOf(grid[position]));
+                        }
+                        else {
+                            if (grid[position] >= 9)
+                                grid[position] = 0;
+                            else
+                                grid[position]++;
+                            textView.setText(String.valueOf(grid[position]));
+                        }
+                    }
+                    return true;
+                }
+            });
+
 
             GradientDrawable gd = new GradientDrawable();
             gd.setColor(0xFFFFFFFF); // Changes this drawbale to use a single color instead of a gradient
             gd.setCornerRadius(5);
             gd.setStroke(1, 0xFF000000);
-            editText.setBackground(gd);
+            textView.setBackground(gd);
 
             InputFilter[] FilterArray = new InputFilter[1];
             FilterArray[0] = new InputFilter.LengthFilter(1);
-            editText.setFilters(FilterArray);
+            textView.setFilters(FilterArray);
 
 
         } else {
-            editText = (EditText) convertView;
+            textView = (EditText) convertView;
         }
+        if (grid[position] != null)
+            textView.setText(String.valueOf(grid[position]));
 
-        editText.setText(String.valueOf(grid[position]));
 
-
-        return editText;
+        return textView;
     }
 
 }

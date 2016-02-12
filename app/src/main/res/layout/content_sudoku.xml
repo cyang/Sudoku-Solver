@@ -38,7 +38,8 @@
         android:text="Medium"
         android:id="@+id/medium"
         android:layout_alignTop="@+id/easy"
-        android:layout_toEndOf="@+id/easy" />
+        android:layout_toEndOf="@+id/easy"
+        android:onClick="populateGrid"/>
 
     <Button
         android:layout_width="wrap_content"
