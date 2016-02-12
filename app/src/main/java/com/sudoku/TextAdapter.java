@@ -18,8 +18,14 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.lang.reflect.Array;
+import java.util.HashMap;
+
 public class TextAdapter extends BaseAdapter {
     private Context mContext;
+    private HashMap<Integer, Integer> puzzle1 = new HashMap<>();
+    private Integer[] puzzle1Positions = {1, 3 ,4, 6, 11, 12, 13, 19, 20, 22, 23, 28, 29, 30, 32, 33, 39, 50, 51, 52, 54, 55, 62, 63, 65, 67, 71, 73, 76, 79};
+    private Integer[] puzzle1Given = {9, 5, 6, 7, 4, 3, 9, 5, 2, 8, 7, 1, 7, 6, 4, 5, 2, 8, 4, 7, 3, 1, 9, 9, 6, 2, 3, 8, 1, 2};
 
     public TextAdapter(Context c) {
         mContext = c;
@@ -63,11 +69,21 @@ public class TextAdapter extends BaseAdapter {
             editText = (EditText) convertView;
         }
 
-//        setEasyPuzzle();
-        editText.setText(String.valueOf(position%10));
-
+        createPuzzle1();
+        if(puzzle1.containsKey(position)) {
+            editText.setText(String.valueOf(puzzle1.get(position)));
+        } else {
+            editText.setText("");
+        }
 
         return editText;
+    }
+
+    public void createPuzzle1(){
+        for (int i = 0; i < puzzle1Positions.length; i++) {
+            puzzle1.put(puzzle1Positions[i], puzzle1Given[i]);
+        }
+
     }
 
 //    public void setEasyPuzzle(){
