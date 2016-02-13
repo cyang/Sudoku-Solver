@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Objects;
 
 public class SudokuActivity extends AppCompatActivity {
     GridView gridview;
@@ -119,10 +120,24 @@ public class SudokuActivity extends AppCompatActivity {
 
     public void checkSolution(View view) {
         boolean win = true;
-        Integer[] solvedArray = new Integer[81];
+
+        int[] userArray = new int[81];
+        int[] solvedArray = new int[81];
 
         TextAdapter textAdapter = (TextAdapter) gridview.getAdapter();
+
+        for (int i = 0; i < 81; i++) {
+            EditText textView = (EditText) gridview.getChildAt(i);
+            String text = String.valueOf(textView.getText());
+            if (text.equals("")){
+                userArray[i] = 0;
+            } else {
+                userArray[i] = Integer.valueOf(text);
+            }
+        }
+
         SudokuSolver sudokuSolver = new SudokuSolver();
+
         sudokuSolver.solve(0, 0, textAdapter.grid2d);
         int x = 0;
         for (int i = 0; i < 9; i++) {
@@ -133,24 +148,22 @@ public class SudokuActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < 81; i++) {
-            if (!solvedArray[i].equals(textAdapter.grid[i])){
-                EditText textView = (EditText) gridview.getChildAt(i);
-                textView.setTextColor(Color.RED);
+            EditText textView = (EditText) gridview.getChildAt(i);
 
+            if (solvedArray[i] != userArray[i]){
+                textView.setTextColor(Color.RED);
                 win = false;
             }
         }
 
 
-        if(win){
+        if(win) {
             Toast.makeText(view.getContext(), "You Win!",
                     Toast.LENGTH_LONG).show();
-
-            Log.i("MD", "We won");
-
+        } else {
+            Toast.makeText(view.getContext(), "Wrong!!",
+                    Toast.LENGTH_LONG).show();
         }
-
-
     }
 }
 
