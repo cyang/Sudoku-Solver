@@ -121,6 +121,8 @@ public class SudokuActivity extends AppCompatActivity {
             }
         }
 
+        checkSolution(view);
+
         Button checkSolutionButton = (Button) findViewById(R.id.checkSolutionButton);
         checkSolutionButton.setEnabled(false);
     }
