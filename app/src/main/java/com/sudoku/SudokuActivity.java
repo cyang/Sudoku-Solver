@@ -114,37 +114,6 @@ public class SudokuActivity extends AppCompatActivity {
                 x++;
             }
         }
-
-//        switch (puzzleLevel){
-//            case 0:
-//                try {
-//                    InputStream inputStream = assetManager.open("solution_easy_1.in");
-//                    gridview.setAdapter(new TextAdapter(this, inputStream));
-//                } catch (IOException e) {
-//                    Log.i("Yo", "OH NO");
-//
-//                }
-//                break;
-//            case 1:
-//                try {
-//                    InputStream inputStream = assetManager.open("solution_medium_1.in");
-//                    gridview.setAdapter(new TextAdapter(this, inputStream));
-//                } catch (IOException e) {
-//                    Log.i("Yo", "OH NO");
-//
-//                }
-//                break;
-//            case 2:
-//                try {
-//                    InputStream inputStream = assetManager.open("solution_hard_1.in");
-//                    gridview.setAdapter(new TextAdapter(this, inputStream));
-//                } catch (IOException e) {
-//                    Log.i("Yo", "OH NO");
-//
-//                }
-//                break;
-//
-//        }
     }
 }
 
