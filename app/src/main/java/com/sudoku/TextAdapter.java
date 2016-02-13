@@ -20,10 +20,8 @@ import java.io.InputStreamReader;
 
 public class TextAdapter extends BaseAdapter {
     private Context mContext;
-    private Integer[] grid = new Integer[81];
+    public Integer[] grid = new Integer[81];
     public Integer [][] grid2d = new Integer[9][9];
-    private int nullRow;
-    private int nullCol;
 
     public TextAdapter(Context c, InputStream inputStream) throws IOException {
         mContext = c;
@@ -119,7 +117,6 @@ public class TextAdapter extends BaseAdapter {
         }
         if (grid[position] != null)
             textView.setText(String.valueOf(grid[position]));
-
 
         return textView;
     }

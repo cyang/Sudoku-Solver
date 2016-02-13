@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -106,7 +109,7 @@ public class SudokuActivity extends AppCompatActivity {
         int x = 0;
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
-                TextView textView = (TextView) textAdapter.getView(x, null, null);
+                TextView textView = (TextView) gridview.getChildAt(x);
                 textView.setText(String.valueOf(textAdapter.grid2d[i][j]));
                 x++;
             }
