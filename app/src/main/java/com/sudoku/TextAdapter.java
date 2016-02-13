@@ -77,30 +77,6 @@ public class TextAdapter extends BaseAdapter {
             textView.setLayoutParams(new GridView.LayoutParams(85, 85));
             textView.setPadding(0, 0, 0, 0);
             textView.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-            //textView.setInputType(InputType.TYPE_CLASS_NUMBER);
-
-
-            textView.setOnTouchListener(new View.OnTouchListener() {
-                @Override
-                public boolean onTouch(View view, MotionEvent motionEvent) {
-//                    if (grid2d[position/9][position%9] == 0) {
-                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
-                            if (grid[position] == 0) {
-                                grid[position] = 1;
-                                textView.setText(String.valueOf(grid[position]));
-                            } else {
-                                if (grid[position] >= 9)
-                                    grid[position] = 1;
-                                else
-                                    grid[position]++;
-                                textView.setText(String.valueOf(grid[position]));
-                            }
-                        }
-//                    }
-                    return true;
-                }
-            });
-
 
             GradientDrawable gd = new GradientDrawable();
             gd.setStroke(1, 0xFF000000);
@@ -114,8 +90,30 @@ public class TextAdapter extends BaseAdapter {
         } else {
             textView = (EditText) convertView;
         }
-        if (grid[position] != 0)
+        if (grid[position] != 0) {
             textView.setText(String.valueOf(grid[position]));
+            textView.setEnabled(false);
+
+        } else {
+            textView.setOnTouchListener(new View.OnTouchListener() {
+                @Override
+                public boolean onTouch(View view, MotionEvent motionEvent) {
+                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                        if (grid[position] == 0) {
+                            grid[position] = 1;
+                            textView.setText(String.valueOf(grid[position]));
+                        } else {
+                            if (grid[position] >= 9)
+                                grid[position] = 1;
+                            else
+                                grid[position]++;
+                            textView.setText(String.valueOf(grid[position]));
+                        }
+                    }
+                    return true;
+                }
+            });
+        }
 
         return textView;
     }

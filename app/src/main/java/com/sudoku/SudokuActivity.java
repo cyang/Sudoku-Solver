@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -68,6 +69,9 @@ public class SudokuActivity extends AppCompatActivity {
     }
 
     public void populateGrid(View view) {
+        Button checkSolutionButton = (Button) findViewById(R.id.checkSolutionButton);
+        checkSolutionButton.setEnabled(true);
+
         String id = view.getResources().getResourceEntryName(view.getId());
         switch (id) {
             case "easy":
@@ -116,6 +120,9 @@ public class SudokuActivity extends AppCompatActivity {
                 x++;
             }
         }
+
+        Button checkSolutionButton = (Button) findViewById(R.id.checkSolutionButton);
+        checkSolutionButton.setEnabled(false);
     }
 
     public void checkSolution(View view) {
@@ -153,7 +160,7 @@ public class SudokuActivity extends AppCompatActivity {
             if (solvedArray[i] != userArray[i]){
                 textView.setTextColor(Color.RED);
                 win = false;
-            }
+            } 
         }
 
 
