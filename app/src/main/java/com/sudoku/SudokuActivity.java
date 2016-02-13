@@ -1,6 +1,7 @@
 package com.sudoku;
 
 import android.content.res.AssetManager;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -114,6 +115,42 @@ public class SudokuActivity extends AppCompatActivity {
                 x++;
             }
         }
+    }
+
+    public void checkSolution(View view) {
+        boolean win = true;
+        Integer[] solvedArray = new Integer[81];
+
+        TextAdapter textAdapter = (TextAdapter) gridview.getAdapter();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        sudokuSolver.solve(0, 0, textAdapter.grid2d);
+        int x = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                solvedArray[x] = textAdapter.grid2d[i][j];
+                x++;
+            }
+        }
+
+        for (int i = 0; i < 81; i++) {
+            if (!solvedArray[i].equals(textAdapter.grid[i])){
+                EditText textView = (EditText) gridview.getChildAt(i);
+                textView.setTextColor(Color.RED);
+
+                win = false;
+            }
+        }
+
+
+        if(win){
+            Toast.makeText(view.getContext(), "You Win!",
+                    Toast.LENGTH_LONG).show();
+
+            Log.i("MD", "We won");
+
+        }
+
+
     }
 }
 

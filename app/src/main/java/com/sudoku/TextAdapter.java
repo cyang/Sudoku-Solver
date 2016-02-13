@@ -83,7 +83,7 @@ public class TextAdapter extends BaseAdapter {
             textView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (grid2d[position/9][position%9] == 0) {
+//                    if (grid2d[position/9][position%9] == 0) {
                         if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
                             if (grid[position] == 0) {
                                 grid[position] = 1;
@@ -96,7 +96,7 @@ public class TextAdapter extends BaseAdapter {
                                 textView.setText(String.valueOf(grid[position]));
                             }
                         }
-                    }
+//                    }
                     return true;
                 }
             });
