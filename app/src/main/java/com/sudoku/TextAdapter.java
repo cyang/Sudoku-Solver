@@ -36,7 +36,7 @@ public class TextAdapter extends BaseAdapter {
             String[] lineArray = line.split(" ");
             for (String element : lineArray) {
                 if (element.equals("*")) {
-                    grid[i] = null;
+                    grid[i] = 0;
                     if (col % 9 == 0 && col != 0) {
                         col = 0;
                         row++;
@@ -83,17 +83,18 @@ public class TextAdapter extends BaseAdapter {
             textView.setOnTouchListener(new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
-                    if (motionEvent.getAction() == MotionEvent.ACTION_DOWN){
-                        if (grid[position] == null) {
-                            grid[position] = 1;
-                            textView.setText(String.valueOf(grid[position]));
-                        }
-                        else {
-                            if (grid[position] >= 9)
+                    if (grid2d[position/9][position%9] == 0) {
+                        if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
+                            if (grid[position] == 0) {
                                 grid[position] = 1;
-                            else
-                                grid[position]++;
-                            textView.setText(String.valueOf(grid[position]));
+                                textView.setText(String.valueOf(grid[position]));
+                            } else {
+                                if (grid[position] >= 9)
+                                    grid[position] = 1;
+                                else
+                                    grid[position]++;
+                                textView.setText(String.valueOf(grid[position]));
+                            }
                         }
                     }
                     return true;
@@ -113,7 +114,7 @@ public class TextAdapter extends BaseAdapter {
         } else {
             textView = (EditText) convertView;
         }
-        if (grid[position] != null)
+        if (grid[position] != 0)
             textView.setText(String.valueOf(grid[position]));
 
         return textView;
