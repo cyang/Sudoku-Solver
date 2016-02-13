@@ -69,8 +69,6 @@ public class SudokuActivity extends AppCompatActivity {
     }
 
     public void populateGrid(View view) {
-        Button checkSolutionButton = (Button) findViewById(R.id.checkSolutionButton);
-        checkSolutionButton.setEnabled(true);
 
         String id = view.getResources().getResourceEntryName(view.getId());
         switch (id) {
@@ -122,9 +120,6 @@ public class SudokuActivity extends AppCompatActivity {
         }
 
         checkSolution(view);
-
-        Button checkSolutionButton = (Button) findViewById(R.id.checkSolutionButton);
-        checkSolutionButton.setEnabled(false);
     }
 
     public void checkSolution(View view) {
