@@ -37,13 +37,6 @@ public class SudokuActivity extends AppCompatActivity {
             Log.i("Yo", "OH NO");
         }
 
-//        gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            public void onItemClick(AdapterView<?> parent, View v,
-//                                    int position, long id) {
-//                Toast.makeText(SudokuActivity.this, "" + position,
-//                        Toast.LENGTH_SHORT).show();
-//            }
-//        });
     }
 
     @Override
@@ -70,7 +63,6 @@ public class SudokuActivity extends AppCompatActivity {
 
     public void populateGrid(View view) {
         String id = view.getResources().getResourceEntryName(view.getId());
-        Log.i("Yo", "Got: " + id);
         switch (id) {
             case "easy":
                 try {
@@ -107,36 +99,39 @@ public class SudokuActivity extends AppCompatActivity {
     }
 
     public void solvePuzzle(View view) {
-        switch (puzzleLevel){
-            case 0:
-                try {
-                    InputStream inputStream = assetManager.open("solution_easy_1.in");
-                    gridview.setAdapter(new TextAdapter(this, inputStream));
-                } catch (IOException e) {
-                    Log.i("Yo", "OH NO");
+        TextAdapter textAdapter = (TextAdapter) gridview.getAdapter();
+        textAdapter.solvePuzzle();
 
-                }
-                break;
-            case 1:
-                try {
-                    InputStream inputStream = assetManager.open("solution_medium_1.in");
-                    gridview.setAdapter(new TextAdapter(this, inputStream));
-                } catch (IOException e) {
-                    Log.i("Yo", "OH NO");
-
-                }
-                break;
-            case 2:
-                try {
-                    InputStream inputStream = assetManager.open("solution_hard_1.in");
-                    gridview.setAdapter(new TextAdapter(this, inputStream));
-                } catch (IOException e) {
-                    Log.i("Yo", "OH NO");
-
-                }
-                break;
-
-        }
+//        switch (puzzleLevel){
+//            case 0:
+//                try {
+//                    InputStream inputStream = assetManager.open("solution_easy_1.in");
+//                    gridview.setAdapter(new TextAdapter(this, inputStream));
+//                } catch (IOException e) {
+//                    Log.i("Yo", "OH NO");
+//
+//                }
+//                break;
+//            case 1:
+//                try {
+//                    InputStream inputStream = assetManager.open("solution_medium_1.in");
+//                    gridview.setAdapter(new TextAdapter(this, inputStream));
+//                } catch (IOException e) {
+//                    Log.i("Yo", "OH NO");
+//
+//                }
+//                break;
+//            case 2:
+//                try {
+//                    InputStream inputStream = assetManager.open("solution_hard_1.in");
+//                    gridview.setAdapter(new TextAdapter(this, inputStream));
+//                } catch (IOException e) {
+//                    Log.i("Yo", "OH NO");
+//
+//                }
+//                break;
+//
+//        }
     }
 }
 

@@ -1,12 +1,8 @@
 package com.sudoku;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.graphics.drawable.GradientDrawable;
 import android.text.InputFilter;
-import android.text.InputType;
-import android.text.method.DigitsKeyListener;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -15,21 +11,19 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ImageView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
-import java.util.HashMap;
 
 public class TextAdapter extends BaseAdapter {
     private Context mContext;
     private Integer[] grid = new Integer[81];
+    private Integer [][] grid2d = new Integer[9][9];
+    private int nullRow;
+    private int nullCol;
 
     public TextAdapter(Context c, InputStream inputStream) throws IOException {
         mContext = c;
@@ -39,19 +33,29 @@ public class TextAdapter extends BaseAdapter {
 
 
         int i = 0;
+        int row = 0, col = 0;
         while((line = in.readLine()) != null){
             String[] lineArray = line.split(" ");
             for (String element : lineArray) {
                 if (element.equals("*")) {
                     grid[i] = null;
+                    if (col % 9 == 0 && col != 0) {
+                        col = 0;
+                        row++;
+                    }
+                    grid2d[row][col] = -1;
                 } else {
+                    if (col % 9 == 0 && col != 0) {
+                        col = 0;
+                        row++;
+                    }
                     grid[i] = Integer.valueOf(element);
+                    grid2d[row][col] = Integer.valueOf(element);
                 }
+                col++;
                 i++;
             }
         }
-
-
 
     }
 
@@ -119,6 +123,80 @@ public class TextAdapter extends BaseAdapter {
 
 
         return textView;
+    }
+
+    public boolean solvePuzzle(){
+        /***
+         * http://www.geeksforgeeks.org/backtracking-set-7-suduku/
+         */
+
+        if (!setNullRowCol()) {
+            for (int i = 0; i < 9; i++) {
+                String row = "";
+                for (int j = 0; j < 9; j++) {
+                    row += String.valueOf(grid2d[i][j]) + " ";
+                }
+                Log.i("Yo", row);
+            }
+            return true;
+        }
+
+        for (int k = 1; k <= 9; k++) {
+            if (safe(nullRow, nullCol, k)){
+                grid2d[nullRow][nullCol] = k;
+
+                if (solvePuzzle())
+                    return true;
+
+                grid2d[nullRow][nullCol] = -1;
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            String row = "";
+            for (int j = 0; j < 9; j++) {
+                row += String.valueOf(grid2d[i][j]) + " ";
+            }
+            Log.i("Yo", row);
+        }
+        return false;
+    }
+    private boolean setNullRowCol(){
+        for (nullRow = 0; nullRow < 9; nullRow++) {
+            for (nullCol = 0; nullCol < 9; nullCol++) {
+                if (grid2d[nullRow][nullCol] == -1){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    private boolean usedInColumn(int col, int number){
+        for (int i = 0; i < 9; i++) {
+            if (grid2d[i][col] == number) {
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean usedInRow(int row, int number){
+//        Log.i("Yo", "NUMBER:" + String.valueOf(number) + "COL" + String.valueOf(row));
+        for (int i = 0; i < 9; i++) {
+            if (grid2d[row][i] == number)
+                return true;
+        }
+        return false;
+    }
+    private boolean usedInSmallBox(int boxBeginRow, int boxBeginCol, int number){
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (grid2d[i + boxBeginRow][j + boxBeginCol] == number)
+                    return true;
+            }
+        }
+        return false;
+    }
+    private boolean safe(int row, int col, int number) {
+        return !usedInColumn(col, number) && !usedInRow(row, number) && !usedInSmallBox(row - row%3, col - col%3, number);
     }
 
 }
