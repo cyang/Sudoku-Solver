@@ -21,7 +21,7 @@ import java.io.InputStreamReader;
 public class TextAdapter extends BaseAdapter {
     private Context mContext;
     private Integer[] grid = new Integer[81];
-    private Integer [][] grid2d = new Integer[9][9];
+    public Integer [][] grid2d = new Integer[9][9];
     private int nullRow;
     private int nullCol;
 
@@ -43,7 +43,7 @@ public class TextAdapter extends BaseAdapter {
                         col = 0;
                         row++;
                     }
-                    grid2d[row][col] = -1;
+                    grid2d[row][col] = 0;
                 } else {
                     if (col % 9 == 0 && col != 0) {
                         col = 0;
@@ -56,7 +56,6 @@ public class TextAdapter extends BaseAdapter {
                 i++;
             }
         }
-
     }
 
     public int getCount() {
@@ -124,80 +123,5 @@ public class TextAdapter extends BaseAdapter {
 
         return textView;
     }
-
-    public boolean solvePuzzle(){
-        /***
-         * http://www.geeksforgeeks.org/backtracking-set-7-suduku/
-         */
-
-        if (!setNullRowCol()) {
-            for (int i = 0; i < 9; i++) {
-                String row = "";
-                for (int j = 0; j < 9; j++) {
-                    row += String.valueOf(grid2d[i][j]) + " ";
-                }
-                Log.i("Yo", row);
-            }
-            return true;
-        }
-
-        for (int k = 1; k <= 9; k++) {
-            if (safe(nullRow, nullCol, k)){
-                grid2d[nullRow][nullCol] = k;
-
-                if (solvePuzzle())
-                    return true;
-
-                grid2d[nullRow][nullCol] = -1;
-            }
-        }
-        for (int i = 0; i < 9; i++) {
-            String row = "";
-            for (int j = 0; j < 9; j++) {
-                row += String.valueOf(grid2d[i][j]) + " ";
-            }
-            Log.i("Yo", row);
-        }
-        return false;
-    }
-    private boolean setNullRowCol(){
-        for (nullRow = 0; nullRow < 9; nullRow++) {
-            for (nullCol = 0; nullCol < 9; nullCol++) {
-                if (grid2d[nullRow][nullCol] == -1){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-    private boolean usedInColumn(int col, int number){
-        for (int i = 0; i < 9; i++) {
-            if (grid2d[i][col] == number) {
-                return true;
-            }
-        }
-        return false;
-    }
-    private boolean usedInRow(int row, int number){
-//        Log.i("Yo", "NUMBER:" + String.valueOf(number) + "COL" + String.valueOf(row));
-        for (int i = 0; i < 9; i++) {
-            if (grid2d[row][i] == number)
-                return true;
-        }
-        return false;
-    }
-    private boolean usedInSmallBox(int boxBeginRow, int boxBeginCol, int number){
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (grid2d[i + boxBeginRow][j + boxBeginCol] == number)
-                    return true;
-            }
-        }
-        return false;
-    }
-    private boolean safe(int row, int col, int number) {
-        return !usedInColumn(col, number) && !usedInRow(row, number) && !usedInSmallBox(row - row%3, col - col%3, number);
-    }
-
 }
 

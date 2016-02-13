@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -100,7 +101,16 @@ public class SudokuActivity extends AppCompatActivity {
 
     public void solvePuzzle(View view) {
         TextAdapter textAdapter = (TextAdapter) gridview.getAdapter();
-        textAdapter.solvePuzzle();
+        SudokuSolver sudokuSolver = new SudokuSolver();
+        sudokuSolver.solve(0, 0, textAdapter.grid2d);
+        int x = 0;
+        for (int i = 0; i < 9; i++) {
+            for (int j = 0; j < 9; j++) {
+                TextView textView = (TextView) textAdapter.getView(x, null, null);
+                textView.setText(String.valueOf(textAdapter.grid2d[i][j]));
+                x++;
+            }
+        }
 
 //        switch (puzzleLevel){
 //            case 0:
