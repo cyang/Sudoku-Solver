@@ -157,10 +157,14 @@ public class SudokuActivity extends AppCompatActivity {
         for (int i = 0; i < 81; i++) {
             EditText textView = (EditText) gridview.getChildAt(i);
 
-            if (solvedArray[i] != userArray[i]){
-                textView.setTextColor(Color.RED);
-                win = false;
-            } 
+            if(textView.isEnabled()) {
+                if (solvedArray[i] != userArray[i]) {
+                    textView.setTextColor(Color.RED);
+                    win = false;
+                } else {
+                    textView.setTextColor(Color.BLACK);
+                }
+            }
         }
 
 
